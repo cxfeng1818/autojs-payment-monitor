@@ -1,24 +1,17 @@
-// 自动精灵 - 支付链接监听脚本
-// 需要开启无障碍服务
-
 const SERVER_URL = "http://43.162.112.203:5000/payment";
 
-// 启动监听
 console.show();
 console.log("开始监听支付链接...");
 
-// 监听窗口变化
 events.on("activity", function(activity) {
     let packageName = activity.packageName;
     
-    // 检测支付宝启动
     if (packageName && packageName.includes("alipay")) {
         console.log("检测到支付宝启动");
         captureIntent();
     }
 });
 
-// 监听剪贴板
 setInterval(function() {
     let clip = getClip();
     if (clip && (clip.startsWith("alipay://") || clip.startsWith("alipays://"))) {
@@ -27,10 +20,8 @@ setInterval(function() {
     }
 }, 1000);
 
-// 尝试读取 Intent 数据
 function captureIntent() {
     try {
-        // 使用 shell 命令获取最近的 Intent
         let result = shell("dumpsys activity intents | grep alipay", true);
         if (result.code == 0) {
             let output = result.result;
