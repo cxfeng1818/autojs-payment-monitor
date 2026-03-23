@@ -33,7 +33,7 @@ function captureIntent() {
 }
 
 function extractLink(text) {
-    let regex = /alipay[s]?:\/\/[^\s'"<>]+/gi;
+    let regex = new RegExp("alipay[s]?://[^\\s'\"<>]+", "gi");
     let matches = text.match(regex);
     if (matches) {
         matches.forEach(link => {
